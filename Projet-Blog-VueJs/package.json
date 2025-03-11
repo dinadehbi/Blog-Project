@@ -20,6 +20,7 @@
     "dependencies": {
         "admin-lte": "^4.0.0-beta3",
         "bootstrap": "^5.3.3",
-        "chart.js": "^4.4.8"
+        "chart.js": "^4.4.8",
+        "vue-i18n": "^11.0.0-rc.1"
     }
 }
