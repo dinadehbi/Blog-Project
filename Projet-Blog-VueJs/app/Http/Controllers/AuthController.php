@@ -27,4 +27,11 @@ class AuthController extends Controller
             'user' => $user
         ], 201); // HTTP status 201 indicates successful creation
     }
+
+    // public function logout()
+    //     {
+    //         auth()->logout(); // Supprimer token
+    //         return response()->json(['message' => 'Successfully logged out']);
+    //     }
+
 }
