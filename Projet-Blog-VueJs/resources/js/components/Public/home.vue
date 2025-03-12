@@ -13,8 +13,6 @@
             <li class="nav-item"><router-link to="/" class="nav-link">{{ $t('home') }}</router-link></li>
             <li class="nav-item"><router-link to="/articles" class="nav-link">{{ $t('articles') }}</router-link></li>
             <li class="nav-item"><router-link to="/categories" class="nav-link">{{ $t('categories') }}</router-link></li>
-            <li class="nav-item"><router-link to="/about" class="nav-link">{{ $t('about') }}</router-link></li>
-            <li class="nav-item"><router-link to="/contact" class="nav-link">{{ $t('contact') }}</router-link></li>
 
             <!-- Language Selector inside Navbar -->
             <li class="nav-item">
@@ -22,6 +20,21 @@
             </li>
             <li class="nav-item">
               <button @click="switchLanguage('ar')" class="btn btn-outline-light">{{ $t('arabic') }}</button>
+              
+            </li>
+
+            <!-- User info and logout -->
+            <li class="nav-item" v-if="isAuthenticated">
+              <span class="nav-link text-white">{{ userName }}</span>
+            </li>
+            <li class="nav-item" v-if="isAuthenticated">
+              <button @click="logout" class="btn btn-outline-light">{{ $t('logout') }}</button>
+            </li>
+            <li class="nav-item" v-else>
+              <router-link to="/login" class="nav-link">{{ $t('login') }}</router-link>
+            </li>
+            <li class="nav-item" v-else>
+              <router-link to="/register" class="nav-link">{{ $t('register') }}</router-link>
             </li>
           </ul>
         </div>
@@ -59,13 +72,16 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useI18n } from 'vue-i18n';  // Import the useI18n hook
+import { useI18n } from 'vue-i18n';
 import axios from 'axios';
+import { useRouter } from 'vue-router'; // Import Vue Router to handle redirection
 
-const { t, locale } = useI18n();  // Destructure to get t and locale
+const { t, locale } = useI18n();
+const router = useRouter(); // Initialize router
 
 const articles = ref([]);
-const isAuthenticated = ref(false); // You can modify this based on your authentication logic
+const isAuthenticated = ref(false); // To check if the user is logged in
+const userName = ref(''); // Store the user's name
 
 // Fetch articles when component is mounted
 onMounted(async () => {
@@ -75,16 +91,26 @@ onMounted(async () => {
   } catch (error) {
     console.error('Error fetching articles:', error);
   }
+
+  // Check if the user is authenticated (this can be set by checking localStorage or an API)
+  const user = JSON.parse(localStorage.getItem('user'));
+  if (user) {
+    isAuthenticated.value = true;
+    userName.value = user.name; // Display the logged-in user's name
+  }
 });
 
 // Switch language function
 const switchLanguage = (language) => {
-  locale.value = language; // Directly change the locale using the `locale` from useI18n
+  locale.value = language;
+};
+
+// Logout function
+const logout = () => {
+  // Remove the user from localStorage and update the state
+  localStorage.removeItem('user');
+  isAuthenticated.value = false;
+  userName.value = '';
+  router.push('/login'); // Redirect to the login page after logout
 };
 </script>
-
-<style scoped>
-/* Remove the previous fixed positioning of language selector */
-  /* Keep it as it was before but inside navbar */
-
-</style>

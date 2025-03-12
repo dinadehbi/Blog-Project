@@ -37,3 +37,11 @@ Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
  Route::get('/articles/{article}', [ArticleController::class, 'show']); // Afficher un article spécifique
  Route::put('/articles/{article}', [ArticleController::class, 'update']); // Mettre à jour un article
  Route::delete('/articles/{article}', [ArticleController::class, 'destroy']);
+
+
+
+
+ use App\Http\Controllers\AuthController;
+
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
