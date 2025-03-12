@@ -68,6 +68,10 @@
               <button type="submit" class="btn btn-primary w-100">
                 Register
               </button>
+              <p class="mt-3 text-center">
+                I have an account?
+                <router-link to="/login">LogIn</router-link>
+              </p>
             </form>
           </div>
         </div>
@@ -75,7 +79,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import axios from 'axios';
 
@@ -88,7 +91,9 @@ export default {
         password: '',
         password_confirmation: ''
       },
-      errors: {}
+      errors: {},
+      isAuthenticated: false, // ✅ Hna zidnaha
+      userName: '' // ✅ Hna zidnaha
     };
   },
   methods: {
@@ -100,14 +105,19 @@ export default {
         // Make the POST request to register the user
         const response = await axios.post('http://127.0.0.1:8000/api/register', this.form);
         
-        // Handle the response
+        // ✅ Khzn user f localStorage w bdl isAuthenticated
         if (response.status === 201) {
-          console.log('User registered successfully:', response.data);
-          // Optionally, redirect the user to another page after successful registration
-          this.$router.push('/login'); // Change to your desired route
+          const user = response.data.user; // Jib user
+          localStorage.setItem('user', JSON.stringify(user)); // Khzn f localStorage
+
+          // ✅ Update variables bach tban username f navbar bla refresh
+          this.isAuthenticated = true;
+          this.userName = user.name;
+
+          console.log('User registered successfully:', user);
+          this.$router.push('/'); // Redirect b3d signup
         }
       } catch (error) {
-        // Handle validation errors
         if (error.response && error.response.data.errors) {
           this.errors = error.response.data.errors;
         } else {
@@ -118,6 +128,8 @@ export default {
   }
 };
 </script>
+
+
 
 <style scoped>
 .card {

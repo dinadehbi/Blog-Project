@@ -15,7 +15,7 @@
         </form>
         <p class="mt-3 text-center">
           Don't have an account?
-          <router-link to="/signup">Sign Up</router-link>
+          <router-link to="/register">Sign Up</router-link>
         </p>
       </div>
     </div>

@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\ArticleController;
+use Illuminate\Http\Request;
+
 
 
 
@@ -45,3 +47,15 @@ Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+
+Route::middleware('auth.api')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
+
+Route::middleware(['admin'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('admin.dashboard'); // View dyal dashboard
+    })->name('dashboard');
+});
+

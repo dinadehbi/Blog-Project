@@ -1,27 +1,48 @@
 <?php
+// app/Policies/ArticlePolicy.php
 
 namespace App\Policies;
 
 use App\Models\User;
 use App\Models\Article;
-use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ArticlePolicy
 {
-    use HandlesAuthorization;
-
+    /**
+     * Determine if the given article can be created by the user.
+     *
+     * @param  \App\Models\User  $user
+     * @return bool
+     */
     public function create(User $user)
     {
-        return $user != null; 
+        // 9dari tsayb 3la l-logic dyal user wach y9dr ydir create
+        return $user->role === 'admin'; // F had tariqa li kaymchi
     }
 
+    /**
+     * Determine if the given article can be updated by the user.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Article  $article
+     * @return bool
+     */
     public function update(User $user, Article $article)
     {
-        return $user->id === $article->user_id; 
+        // User kaymchi l-article li howa sahbou w kay7awel y updateha
+        return $user->id === $article->user_id || $user->role === 'admin';
     }
 
+    /**
+     * Determine if the given article can be deleted by the user.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Article  $article
+     * @return bool
+     */
     public function delete(User $user, Article $article)
     {
-        return $user->id === $article->user_id; 
+        // User kay9dr y delete article, ila kan user id dialo matcha m3a article
+        return $user->id === $article->user_id || $user->role === 'admin';
     }
 }
