@@ -10,6 +10,8 @@ import CreateArticle from '../components/Articles/CreateArticle.vue';
 import EditArticle from '../components/Articles/EditArticle.vue';
 import Dashboard from '../components/Admin/Dashboard.vue';
 import Home from '../components/Public/home.vue';
+import Login from '../components/Auth/Login.vue';
+import Register from '../components/Auth/Register.vue';
 
 
 const routes = 
@@ -50,7 +52,15 @@ const routes =
   {
     path: '/',
     component: Home
+  },
+  {
+    path: '/login',
+    component: Login
+  },  {
+    path: '/register',
+    component: Register
   }
+
 
 ];
 

@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\AuthController;
+
 
 
 
@@ -44,6 +46,11 @@ Route::post('api/categories', [CategoryController::class, 'store']);
 Route::get('api/categories/{id}', [CategoryController::class, 'show']);
 Route::put('api/categories/{id}', [CategoryController::class, 'update']);
 Route::delete('api/categories/{id}', [CategoryController::class, 'destroy']);
+
+
+Route::post('api/register', [AuthController::class, 'register']);
+Route::post('api/login', [AuthController::class, 'login']);
+
 
 
 
