@@ -29,7 +29,6 @@ class ArticlePolicy
      */
     public function update(User $user, Article $article)
     {
-        // User kaymchi l-article li howa sahbou w kay7awel y updateha
         return $user->id === $article->user_id || $user->role === 'admin';
     }
 
@@ -42,7 +41,6 @@ class ArticlePolicy
      */
     public function delete(User $user, Article $article)
     {
-        // User kay9dr y delete article, ila kan user id dialo matcha m3a article
         return $user->id === $article->user_id || $user->role === 'admin';
     }
 }

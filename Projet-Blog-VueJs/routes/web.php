@@ -58,7 +58,7 @@ Route::middleware('auth.api')->get('api/user', function (Request $request) {
 });
 Route::middleware(['admin'])->group(function () {
     Route::get('api/dashboard', function () {
-        return view('admin.dashboard'); // View dyal dashboard
+        return view('admin.dashboard'); 
     })->name('dashboard');
 });
 
